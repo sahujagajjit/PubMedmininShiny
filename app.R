@@ -20,19 +20,19 @@ required_cran <- c(
   "webshot2"
 )
 
-# Install CRAN packages if missing
+# Install missing packages
 install_if_missing <- function(pkgs) {
   new_pkgs <- pkgs[!(pkgs %in% installed.packages()[,"Package"])]
-  if(length(new_pkgs)) install.packages(new_pkgs, dependencies = TRUE)
+  if (length(new_pkgs)) install.packages(new_pkgs, dependencies = TRUE)
   invisible(lapply(pkgs, require, character.only = TRUE))
 }
 
 install_if_missing(required_cran)
 
-# # Check and install Chromium if not found (for webshot2 screenshots)
-# if (!webshot2::is_chromium_installed()) {
-#   webshot2::install_chromium()
-# }
+# Attempt to install Chromium if webshot2 fails on a screenshot call
+try({
+  webshot2::install_chromium()
+}, silent = TRUE)
 
 
 
