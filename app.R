@@ -1,8 +1,8 @@
 library(shiny)
 library(shinyFiles)
+library(shinydashboard)
 library(DT)
 library(bibliometrix)
-library(shinydashboard)
 library(reshape2)
 library(igraph)
 library(visNetwork)
@@ -13,7 +13,7 @@ library(webshot2)
 
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Basic Bibliometrics App"),
+  dashboardHeader(disable = TRUE),  # Disable default header
   dashboardSidebar(
     radioButtons("inputMode", "Input Mode:",
                  choices = c("Single File" = "file", "Directory" = "dir"),
@@ -38,9 +38,41 @@ ui <- dashboardPage(
     actionButton("submit", "Submit")
   ),
   dashboardBody(
-    uiOutput("mainUI")
+    # Custom header row with logos and title
+    tags$head(
+      tags$style(HTML("
+        .custom-header {
+          background-color: #3c8dbc;
+          padding: 10px;
+          color: white;
+        }
+        .custom-header img {
+          height: 30px;
+        }
+        .custom-header-title {
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          line-height: 50px;
+        }
+      "))
+    ),
+    fluidRow(
+      class = "custom-header",
+      column(2, tags$img(src = "GyanArrasLogo.png", align = "left")),  # Replace with your actual logo file
+      column(8, div(class = "custom-header-title", "📚 PubMedMininShiny")),
+      column(2, tags$img(src = "BN2_logo.jpg", align = "right"))  # Replace with your actual logo file
+    ),
+    uiOutput("mainUI"),
+    div(class = "footer",
+        tags$hr(),
+        p("© ", format(Sys.Date(), "%Y"), " Bioinformatics Nexus Network (BN²), GyanArras Academy Pvt. Ltd. All rights reserved.",
+          style = "text-align:center; color: #888; font-size: 14px; margin-bottom: 10px;")
+    )
+    
   )
 )
+
 
 server <- function(input, output, session) {
   volumes <- c(Home = fs::path_home(), "Root" = "/")
