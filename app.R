@@ -29,10 +29,10 @@ install_if_missing <- function(pkgs) {
 
 install_if_missing(required_cran)
 
-# Check and install Chromium if not found (for webshot2 screenshots)
-if (!webshot2::is_chromium_installed()) {
-  webshot2::install_chromium()
-}
+# # Check and install Chromium if not found (for webshot2 screenshots)
+# if (!webshot2::is_chromium_installed()) {
+#   webshot2::install_chromium()
+# }
 
 
 
