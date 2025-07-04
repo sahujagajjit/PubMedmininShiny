@@ -1,14 +1,38 @@
-library(shiny)
-library(shinyFiles)
-library(shinydashboard)
-library(DT)
-library(bibliometrix)
-library(reshape2)
-library(igraph)
-library(visNetwork)
-library(colourpicker)
-library(shinycssloaders)
-library(webshot2)
+# Developer: JeeT
+# A tool for PubMed data analysis for scientometrcs and text mining
+# Date created: July 4, 2025
+# Date last updated: July 4, 2025
+
+
+
+# === Auto-install Required Packages ===
+required_cran <- c(
+  "shiny",
+  "shinyFiles",
+  "shinydashboard",
+  "DT",
+  "bibliometrix",
+  "reshape2",
+  "igraph",
+  "visNetwork",
+  "colourpicker",
+  "shinycssloaders",
+  "webshot2"
+)
+
+# Install CRAN packages if missing
+install_if_missing <- function(pkgs) {
+  new_pkgs <- pkgs[!(pkgs %in% installed.packages()[,"Package"])]
+  if(length(new_pkgs)) install.packages(new_pkgs, dependencies = TRUE)
+  invisible(lapply(pkgs, require, character.only = TRUE))
+}
+
+install_if_missing(required_cran)
+
+# Check and install Chromium if not found (for webshot2 screenshots)
+if (!webshot2::is_chromium_installed()) {
+  webshot2::install_chromium()
+}
 
 
 
