@@ -17,7 +17,8 @@ required_cran <- c(
   "visNetwork",
   "colourpicker",
   "shinycssloaders",
-  "webshot2"
+  "webshot2",
+  "ggplot2"
 )
 
 # Install missing packages
